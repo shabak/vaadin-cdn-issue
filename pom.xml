@@ -21,6 +21,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+                <vaadin.version>7.7.0.alpha2</vaadin.version>
+                <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+                <vaadin.widgetset.mode>cdn</vaadin.widgetset.mode>                  
 	</properties>
 
 	<dependencies>
@@ -71,6 +74,10 @@
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
+        <repository>
+            <id>vaadin-prereleases</id>
+            <url>http://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>        
     </repositories>
 	
 	<dependencyManagement>
@@ -78,7 +85,7 @@
 			<dependency>
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-bom</artifactId>
-				<version>7.6.3</version>
+				<version>${vaadin.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -107,23 +114,30 @@
                 </executions>
             </plugin>
 
-            <!--Doesn't work-->
-            <!--<plugin>-->
-                <!--<groupId>com.vaadin.wscdn</groupId>-->
-                <!--<artifactId>wscdn-maven-plugin</artifactId>-->
-                <!--<version>0.0.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>generate-sources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+        <plugin>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-maven-plugin</artifactId>
+            <version>${vaadin.plugin.version}</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>update-theme</goal>
+                        <goal>update-widgetset</goal>
+                        <goal>compile</goal>
+                        <goal>compile-theme</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
 
         </plugins>
 	</build>
 	
+    <pluginRepositories>
+        <pluginRepository>
+            <id>vaadin-prereleases</id>
+            <url>http://maven.vaadin.com/vaadin-prereleases</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
